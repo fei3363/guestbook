@@ -101,8 +101,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // 5. 有資料，取得資料並顯示
             while ($row = mysqli_fetch_array($result)) {
                 // 顯示作者是誰，作者的留言是什麼
-                echo $row['username'] . ": ";
-                echo $row['message'] . "<br>";
+                // echo $row['username'] . ": ";
+                // echo $row['message'] . "<br>";  
+                // 防禦 XSS 攻擊
+                echo htmlspecialchars($row['username'], ENT_QUOTES, 'UTF-8') . ": ";
+                echo htmlspecialchars($row['message'], ENT_QUOTES, 'UTF-8') . "<br>";
             }
         } else {
             // 6. 沒有資料，顯示沒有資料
