@@ -30,4 +30,32 @@
 // 確認開啟 session
 session_start();
 
+// 首頁，確認是否登入，如果沒有登入，跳轉到登入介面
+if (!isset($_SESSION['username']) || empty($_SESSION['username'])) {
+  // 跳轉到 login.php
+  header("Location: login.php");
+  exit;
+}
+
+// 構建新增留言
+
 ?>
+<!-- 新增留言介面 -->
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>首頁</title>
+    </head>
+    <body>
+        <h1>歡迎 <?php echo $_SESSION['username']; ?></h1>
+        <b>新增留言</b>
+        <form method="POST" action="index.php">
+        <!-- textarea -->
+        <textarea name="content" placeholder="請輸入留言"></textarea>
+            <!-- <input type="text" name="content" placeholder="請輸入留言"> -->
+            <input type="submit" value="新增">
+        </form>
+    </body>
+</html>
+
+
