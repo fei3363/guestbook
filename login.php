@@ -3,11 +3,8 @@
 // 登入表單 --> HTML 實作
 // 登入的邏輯 + 資料庫互動 --> PHP 實作
 
-// 資料庫連線
-// 測試資料庫是否有正常連線
-// 1. 宣告變數
-// 2. 連線到資料庫
-// 3. 確認連線狀態
+session_start(); // 加入 Session 機制
+
 
 // 宣告變數
 define('DB_SERVER', 'localhost');
@@ -36,12 +33,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // 帳號密碼不為空，確認帳號密碼是否正確
         // 1. 準備 SQL 語法
         $sql = "SELECT id, username, password FROM users WHERE username = '$username' and password = '$password'";
+        echo $sql;
         // 2. 執行
         $result = mysqli_query($link, $sql);
         // 3. 確認是否正確
         if (mysqli_num_rows($result) == 1) {
+            // 取得會員資料
+            $row = mysqli_fetch_assoc($result);
+            $id = $row['id'];
+            
             // 登入成功
-            echo "登入成功";
+            // echo "登入成功";
+            // 設定 Session
+            // $_SESSION 全域變數，用來儲存 Session 資料
+            // username 是 Session 名稱，$username 是 Session 值
+            $_SESSION['username'] = $username;
+            $_SESSION['id'] = $id;
+            // 跳轉到 index.php
+            header("Location: index.php");
+
         } else {
             // 登入失敗
             echo "登入失敗";
