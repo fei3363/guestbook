@@ -88,7 +88,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <h2>留言列表</h2>
     <?php
     // 1. 準備 SQL 語法
-    $sql = "SELECT * FROM messages";
+    // $sql = "SELECT * FROM messages";
+    // 想知道 user_id 是誰，要去 users 資料表查詢
+    $sql = "SELECT messages.*, users.username FROM messages JOIN users ON messages.user_id = users.id";
+
     // 2. 執行
     $result = mysqli_query($link, $sql);
     // 3. 確認是否正確
@@ -97,6 +100,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (mysqli_num_rows($result) > 0) {
             // 5. 有資料，取得資料並顯示
             while ($row = mysqli_fetch_array($result)) {
+                // 顯示作者是誰，作者的留言是什麼
+                echo $row['username'] . ": ";
                 echo $row['message'] . "<br>";
             }
         } else {
