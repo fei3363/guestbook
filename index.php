@@ -83,6 +83,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <!-- <input type="text" name="content" placeholder="請輸入留言"> -->
         <input type="submit" value="新增">
     </form>
+
+    <!-- 留言列表 -->
+    <h2>留言列表</h2>
+    <?php
+    // 1. 準備 SQL 語法
+    $sql = "SELECT * FROM messages";
+    // 2. 執行
+    $result = mysqli_query($link, $sql);
+    // 3. 確認是否正確
+    if ($result) {
+        // 4. 確認是否有資料
+        if (mysqli_num_rows($result) > 0) {
+            // 5. 有資料，取得資料並顯示
+            while ($row = mysqli_fetch_array($result)) {
+                echo $row['message'] . "<br>";
+            }
+        } else {
+            // 6. 沒有資料，顯示沒有資料
+            echo "沒有資料";
+        }
+    } else {
+        // 7. 錯誤處理
+        echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+    }
+    ?>
+
 </body>
 
 </html>
