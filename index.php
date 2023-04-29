@@ -76,6 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <h1>歡迎
         <?php echo $_SESSION['username']; ?>
     </h1>
+    <a href="logout.php">登出</a>
     <b>新增留言</b>
     <form method="POST" action="index.php">
         <!-- textarea -->
